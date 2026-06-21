@@ -1,16 +1,11 @@
 import pytest
 import requests
 
-# =====================================================================
 # НАСТРОЙКИ ДЛЯ НАСТАВНИКА
-# =====================================================================
 BASE_URL = "https://yougile.com"  # Базовый URL API Yougile
 TOKEN = "PLACE_YOUR_TOKEN_HERE"      # Авторизационный токен (Ключ API)
 
 
-# =====================================================================
-# ПАТТЕРН API CLIENT (PAGE OBJECT ДЛЯ API)
-# =====================================================================
 class ProjectsApiClient:
 
     def __init__(self, base_url: str, token: str):
@@ -60,9 +55,7 @@ def created_project_id(api_client):
     return response.json().get("id")
 
 
-# =====================================================================
 # ТЕСТЫ ДЛЯ МЕТОДА: [POST] /api-v2/projects
-# =====================================================================
 def test_create_project_positive(api_client):
     """Позитивный: Создание проекта с валидным обязательным полем title."""
     payload = {"title": "Новый проект через API"}
@@ -81,9 +74,7 @@ def test_create_project_missing_title_negative(api_client):
     assert response.status_code == 400
 
 
-# =====================================================================
 # ТЕСТЫ ДЛЯ МЕТОДА: [GET] /api-v2/projects/{id}
-# =====================================================================
 def test_get_project_positive(api_client, created_project_id):
     """Позитивный: Получение существующего проекта Yougile по ID."""
     response = api_client.get_project(created_project_id)
@@ -101,9 +92,7 @@ def test_get_project_not_found_negative(api_client):
     assert response.status_code == 404
 
 
-# =====================================================================
 # ТЕСТЫ ДЛЯ МЕТОДА: [PUT] /api-v2/projects/{id}
-# =====================================================================
 def test_update_project_positive(api_client, created_project_id):
     """Позитивный: Изменение названия проекта Yougile."""
     payload = {"title": "Обновленное название проекта"}
